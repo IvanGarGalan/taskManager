@@ -1,0 +1,6 @@
+--Database values you need to put in MySQL in order for the task manager to work.
+CREATE TABLE `taskmanager`.`task` (`id` INT(10) NOT NULL AUTO_INCREMENT , `task` VARCHAR(225) NOT NULL , `date` DATE NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+CREATE USER 'taskUser'@'localhost' IDENTIFIED VIA mysql_native_password USING '***';GRANT SELECT, INSERT, DELETE ON *.* TO 'taskUser'@'localhost' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 
+
+GRANT SELECT, INSERT, DELETE ON `taskmanager`.* TO 'taskUser'@'localhost'; 
