@@ -109,6 +109,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>ID</th>
                     <th>Task</th>
                     <th>Date</th>
@@ -118,14 +119,22 @@
                 <!-- This php code fetches the databse and displays it in the table -->
                 <?php 
                     $search = $db->prepare("select * FROM task ORDER BY `ID` ASC");
-                    $search->execute();  
+                    $search->execute(); 
+                    // A counter for each task 
+                    $count = 1;
                     // While more rows are found, they appear here
                     while ($fetch = $search->fetch()) {
                         ?>
                         <tr>
+                            <!-- For each row. the number of $count increases by 1 -->
+                            <td><?php echo $count++ ?></td>
                             <td><?php echo $fetch['id'] ?></td>
                             <td><?php echo $fetch['task'] ?></td>
                             <td><?php echo $fetch['date'] ?></td>
+                            <!-- This is the button that can erase a task.It calls delete.php and takes the id  -->
+                            <td colspan="2">
+                                <a href="delete.php?id=<?php echo $fetch['id']?>" class="btn btn-danger">X</a>
+                            </td>
                         </tr>
 
                         <?php   
