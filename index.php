@@ -43,7 +43,7 @@
                 $db->commit();
                 //If statement for seeing a success
                 if ($success) {
-                    echo "Successful statement";
+                    // echo "Successful statement";
                 }else{
                     echo "An error has occurred.Try again later";
                     //If nothing gets added, the database does a rollback
@@ -65,84 +65,96 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Task manager</title>
+    <title>Task Manager</title>
+    <link rel="shortcut icon" href="./assets/images/icons8-bloc-16.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
     <!-- Header  -->
     <header class="header">
-        <h1 class="title">Task manager</h1>
+        <h1 class="title">Task Manager</h1>
     </header>
     <!-- Main -->
     <main class="main">
-        <form method="post" action="index.php" class="form">
-            <!--PHP code for inserting an empty ID -->
-            <?php if (isset($errorID)) { ?>
-	            <p><?php echo $errorID; ?></p>
-            <?php } ?>
-            <!-- Adding a name for the ID -->
-        <label for="id">ID</label>
-        <input type="number" name="id">
-
-            <!-- PHP code for inserting an empty task  -->
-            <?php if (isset($errorTask)) { ?>
-	            <p><?php echo $errorTask; ?></p>
-            <?php } ?>
-            <!-- Adding a name for the task -->
-        <label for="title">Name</label>
-        <input type="text" name="task">
-
-            <!--PHP code for inserting an empty date  -->
-            <?php if (isset($errorDate)) { ?>
-                <p><?php echo $errorDate; ?></p>
-            <?php } ?>
-        <!-- Adding a date for the task -->
-        <label for="date">Date</label>
-        <input type="date" name="date">
-        <!-- Submitting the task to the database -->
-        <button type="submit" name="submit" id="add_btn">Add task</button>
-
-
-        </form>
-        <br>
-        <!-- Table for the task to appear -->
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>ID</th>
-                    <th>Task</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- This php code fetches the databse and displays it in the table -->
-                <?php 
-                    $search = $db->prepare("select * FROM task ORDER BY `ID` ASC");
-                    $search->execute(); 
-                    // A counter for each task 
-                    $count = 1;
-                    // While more rows are found, they appear here
-                    while ($fetch = $search->fetch()) {
-                        ?>
-                        <tr>
-                            <!-- For each row. the number of $count increases by 1 -->
-                            <td><?php echo $count++ ?></td>
-                            <td><?php echo $fetch['id'] ?></td>
-                            <td><?php echo $fetch['task'] ?></td>
-                            <td><?php echo $fetch['date'] ?></td>
-                            <!-- This is the button that can erase a task.It calls delete.php and takes the id  -->
-                            <td colspan="2">
-                                <a href="delete.php?id=<?php echo $fetch['id']?>" class="btn btn-danger">X</a>
-                            </td>
-                        </tr>
-
-                        <?php   
-                       } 
-                        ?>
-                
-            </tbody>
-        </table>
+            <div class="card-group">
+  <div class="card">
+    <div class="card-body">
+    <form method="post" action="index.php" class="form">
+                      <!--PHP code for inserting an empty ID -->
+                      <?php if (isset($errorID)) { ?>
+                          <p><?php echo $errorID; ?></p>
+                      <?php } ?>
+                      <!-- Adding a name for the ID -->
+                  <label for="id" class="form-label">ID</label>
+                  <input type="number" name="id">
+                  
+                      <!-- PHP code for inserting an empty task  -->
+                      <?php if (isset($errorTask)) { ?>
+                          <p><?php echo $errorTask; ?></p>
+                      <?php } ?>
+                      <!-- Adding a name for the task -->
+                  <label for="title" class="form-label">Name</label>
+                  <input type="text" name="task">
+                  
+                      <!--PHP code for inserting an empty date  -->
+                      <?php if (isset($errorDate)) { ?>
+                          <p><?php echo $errorDate; ?></p>
+                      <?php } ?>
+                  <!-- Adding a date for the task -->
+                  <label for="date"class="form-label">Date</label>
+                  <input type="date" name="date">
+                  <!-- Submitting the task to the database -->
+                  <button class="btn btn-primary" type="submit" name="submit" id="add_btn">Add task</button>
+                  
+                  
+                  </form>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+         <!-- Table for the task to appear -->
+         <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Task</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- This php code fetches the databse and displays it in the table -->
+                    <?php 
+                        $search = $db->prepare("select * FROM task ORDER BY `ID` ASC");
+                        $search->execute(); 
+                        // A counter for each task 
+                        $count = 1;
+                        // While more rows are found, they appear here
+                        while ($fetch = $search->fetch()) {
+                            ?>
+                            <tr>
+                                <!-- For each row. the number of $count increases by 1 -->
+                                <td><?php echo $count++ ?></td>
+                                <td><?php echo $fetch['id'] ?></td>
+                                <td><?php echo $fetch['task'] ?></td>
+                                <td><?php echo $fetch['date'] ?></td>
+                                <!-- This is the button that can erase a task.It calls delete.php and takes the id  -->
+                                <td colspan="2">
+                                    <a href="delete.php?id=<?php echo $fetch['id']?>" class="btn btn-danger">X</a>
+                                </td>
+                            </tr>
+            
+                            <?php   
+                           } 
+                            ?>
+                    
+                </tbody>
+            </table>
+    </div>
+  </div>
+  
+</div>
+        
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     </main>
